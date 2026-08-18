@@ -1,0 +1,12 @@
+{
+  "name": "inventory-api",
+  "version": "1.0.0",
+  "description": "an inventory manager api for verasales",
+  "license": "ISC",
+  "author": "C0deWeather",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
