@@ -1,22 +1,25 @@
 import { verifyToken } from "../utils/jwt.js"
+import { ClientError } from "../utils/errors.js"
 
 export default function authenticate(req, res, next) {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-        throw new Error("Authorization header is required");
+        throw new ClientError("Authorization header is required", 401);
     }
 
-    const authHeaderValue = authHeader.split(" ");
+    const [scheme, token] = authHeader.split(" ");
 
-    if ( authHeaderValue[0] !== "Bearer") {
-        throw new Error("Invalid authorizatin header");
+    if ( scheme !== "Bearer" || !token ) {
+        throw new ClientError("Invalid authorization header", 401);
     }
 
-    const token = authHeaderValue[1];
-    const payload = verifyToken(token);
-
-    req.user = payload;
+    try {
+        const payload = verifyToken(token);
+        req.user = payload;
+    } catch(error) {
+        throw new ClientError("Invalid or expired token", 401);
+    }
 
     next();
 }
