@@ -7,7 +7,7 @@ if (!config.port) {
 	throw new Error("PORT is required");
 }
 
-if (!jwtSecret) {
+if (!config.jwtSecret) {
 	throw new Error("JWT_SECRET is required");
 }
 
